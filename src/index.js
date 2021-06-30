@@ -7,7 +7,8 @@ const miModulo = (() => {
     'use strict';
     let inputPalabraEscrita = document.querySelector('.new-todo'),
         clearButton = document.querySelector('.clear-completed'),
-        filtros = document.querySelectorAll('.filters .filtro');
+        filtros = document.querySelectorAll('.filters .filtro'),
+        pendientes = document.querySelector('strong');
 
     let ulElement = document.querySelector('.todo-list');
 
@@ -35,12 +36,15 @@ const miModulo = (() => {
         })
 
         window.addEventListener('DOMContentLoaded', () => {
+            // Cargando tareas existentes
             for (let i = 0; i < localStorage.length; i++) {
                 let todo = new Todo(localStorage.getItem(localStorage.key(i)));
                 todo.id = localStorage.key(i);
                 crearTodoHTML(todo);
                 todoList.nuevoTodo(todo);
             }
+            // Contando tareas existentes
+            pendientes.textContent = localStorage.length;
         })
 
         filtros.forEach(filtro => {
@@ -60,17 +64,11 @@ const miModulo = (() => {
                     }
                     filtros.forEach(filtro => filtro.classList.remove('selected'));
                     filtro.classList.add('selected');
-
                 })
             });
         });
     }
 
-    const inicializacion = () => {
-        manejoDeEventos();
-    
-    }
-
-    inicializacion();
+    manejoDeEventos();
 })();
 
